@@ -20,8 +20,9 @@ def go(config: DictConfig):
         # This was passed on the command line as a comma-separated list of steps
         steps_to_execute = config["main"]["execute_steps"].split(",")
     else:
-        assert isinstance(config["main"]["execute_steps"], list)
-        steps_to_execute = config["main"]["execute_steps"]
+        steps_to_execute = list(config["main"]["execute_steps"])
+    #        assert isinstance(config["main"]["execute_steps"], list)
+    #        steps_to_execute = config["main"]["execute_steps"]
 
     # Download step
     if "download" in steps_to_execute:
@@ -71,7 +72,7 @@ def go(config: DictConfig):
             os.path.join(root_path, "segregate"),
             "main",
             parameters={
-                "input_artifact": "processed_data.csv:latest",
+                "input_artifact": "preprocessed_data.csv:latest",
                 "artifact_root": "data",
                 "artifact_type": "segregated_data",
                 "test_size": config["data"]["test_size"],
